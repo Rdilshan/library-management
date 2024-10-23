@@ -3,10 +3,15 @@ import { PrismaService } from '../prisma.service';
 import { Prisma, Admin } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import { AdminDTO } from './admindto/admindto';
+import { JwtService } from '@nestjs/jwt';
+
 
 @Injectable()
 export class AdminService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private jwtService: JwtService,
+  ) {}
 
   async getAlladmin() {
     const admin = await this.prisma.admin.findMany();
@@ -81,5 +86,30 @@ export class AdminService {
     }
   }
 
+  async login(email: string, password: string) {
+    try {
+      const checkadmin = this.prisma.admin.findFirst({
+        where: { email },
+      });
+      
+      if ((await checkadmin).password === '') {
+        throw new Error('Admin not found');
+      }
+      const isPasswordValid = await bcrypt.compare(password, (await checkadmin).password);
+      if (!isPasswordValid) {
+        throw new Error('Invalid password');
+      }
+
+      const token = this.jwtService.sign({ email: (await checkadmin).email });
+
+      return { token };
+
+    } catch (error) {
+      throw new HttpException(
+        error.message || 'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR, // 500 Internal Server Error
+      );
+    }
+  }
   
 }

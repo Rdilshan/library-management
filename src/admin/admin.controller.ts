@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { Admin as AdminModel } from '@prisma/client';
 
@@ -16,16 +24,14 @@ export class AdminController {
   //   return this.adminService.createSuperAdmin(admin);
   // }
 
-
-   @Post()
-   async createAdmin(@Body() admin: AdminModel) {
-     return this.adminService.createAdmin(admin);
-   }
-
+  @Post()
+  async createAdmin(@Body() admin: AdminModel) {
+    return this.adminService.createAdmin(admin);
+  }
 
   @Delete(':id')
   async deleteAdmin(@Param('id') id: number) {
-    return this.adminService.deleteAdmin(id); 
+    return this.adminService.deleteAdmin(id);
   }
 
   @Patch(':id')
@@ -33,4 +39,15 @@ export class AdminController {
     return this.adminService.updateAdmin(id, admin);
   }
 
+
+
+  @Post('/login')
+  async login(@Body() body: { email: string; password: string }) {
+    const { email, password } = body;
+    return this.adminService.login(email, password);
+  }
+
+  
 }
+
+

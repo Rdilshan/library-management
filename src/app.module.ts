@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { Adminresolver } from './graphql/resolvers/Adminresolver';
 import { Bookresolver } from "./graphql/resolvers/Bookresolver";
 import { Memberresolver } from './graphql/resolvers/Memberresolver';
+import { BorrowBookresolver } from './graphql/resolvers/BorrowBookresolver';
 
 @Module({
   imports: [
@@ -21,6 +22,6 @@ import { Memberresolver } from './graphql/resolvers/Memberresolver';
     }),
   ],
   controllers: [],
-  providers: [PrismaService, Adminresolver,Bookresolver,Memberresolver],
+  providers: [PrismaService, Adminresolver,Bookresolver,Memberresolver,BorrowBookresolver],
 })
 export class AppModule {}

@@ -34,6 +34,20 @@ type Member {
   name: String!
 }
 
+type BorrowBook {
+  id: Int!
+  bookId: Float!
+  userId: Float!
+  bringDate: DateTime!
+  endDate: DateTime!
+  finished: Visible!
+}
+
+enum Visible {
+  yes
+  no
+}
+
 type Query {
   getAdmins: [Admin!]!
   getAdmin(id: Int!): Admin!
@@ -42,6 +56,10 @@ type Query {
   getBook(id: Int!): Book!
   getMembers: [Member!]!
   getMember(id: Int!): Member!
+  getBorrowBooks: [BorrowBook!]!
+  getborrowBook(id: Int!): BorrowBook!
+  BringBookset: [BorrowBook!]!
+  BorrowBookset: [BorrowBook!]!
 }
 
 type Mutation {
@@ -54,4 +72,8 @@ type Mutation {
   createMember(email: String!, name: String!): Member!
   UpdateMember(id: Int!, email: String!, name: String!): Member!
   DeleteMember(id: Int!): Member!
+  createBorrowBook(bookId: Float!, userId: Float!, bringDate: DateTime!, endDate: DateTime!): BorrowBook!
+  UpdateBorrowBook(id: Int!, bookId: Float!, userId: Float!, bringDate: DateTime!, endDate: DateTime!): BorrowBook!
+  DeleteBorrowBook(id: Int!): BorrowBook!
+  updateBringBook(id: Int!): BorrowBook!
 }

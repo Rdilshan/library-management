@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module ,NestModule, MiddlewareConsumer, RequestMethod} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
@@ -8,6 +8,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { MembersModule } from './members/members.module';
 import { BookdModule } from './bookd/bookd.module';
 import { BorrowBookModule } from './borrow-book/borrow-book.module';
+
+//middlware
+import {SuperadminLoggerMiddleware} from "./common/middlware/checkingsuperadmin.middlware";
 
 @Module({
   imports: [
@@ -20,4 +23,14 @@ import { BorrowBookModule } from './borrow-book/borrow-book.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(SuperadminLoggerMiddleware)
+      .exclude(
+        { path: 'admin/login', method: RequestMethod.POST }
+      )
+      .forRoutes('admin');
+  }
+}

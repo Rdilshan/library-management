@@ -100,7 +100,7 @@ export class AdminService {
         throw new Error('Invalid password');
       }
 
-      const token = this.jwtService.sign({ email: (await checkadmin).email });
+      const token = this.jwtService.sign({ email: (await checkadmin).email,role: (await checkadmin).role });
 
       return { token };
 

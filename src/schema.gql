@@ -56,6 +56,7 @@ type Query {
   getBook(id: Int!): Book!
   getMembers: [Member!]!
   getMember(id: Int!): Member!
+  getMemberHistory(id: Int!): BorrowBook!
   getBorrowBooks: [BorrowBook!]!
   getborrowBook(id: Int!): BorrowBook!
   BringBookset: [BorrowBook!]!

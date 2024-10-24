@@ -1,15 +1,12 @@
 import { Resolver, Query, Args, Int, Mutation } from '@nestjs/graphql';
-import {Member} from "../model/Member"
+import { Member } from '../model/Member';
 import { PrismaService } from '../../prisma.service';
-
-
+import { BorrowBook } from '../model/BorrowBook';
 
 export
 @Resolver()
 class Memberresolver {
-  constructor(
-    private readonly prisma: PrismaService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   @Query(() => [Member])
   async getMembers() {
@@ -17,22 +14,24 @@ class Memberresolver {
   }
 
   @Query(() => Member)
-  async getMember(
-    @Args('id', { type: () => Int }) id: number,
-  ) {
-    id = Number(id)
+  async getMember(@Args('id', { type: () => Int }) id: number) {
+    id = Number(id);
     return this.prisma.user.findFirst({
-        where:{id}
+      where: { id },
     });
   }
 
-
+  @Query(() => BorrowBook)
+  async getMemberHistory(@Args('id', { type: () => Int }) id: number) {
+    id = Number(id);
+    return await this.prisma.borrowBook.findMany({
+      where: {
+        userId: id,
+      },
+    });
+  }
   @Mutation(() => Member)
-  async createMember(
-    @Args('email') email: string,
-    @Args('name') name: string,
-
-  ) {
+  async createMember(@Args('email') email: string, @Args('name') name: string) {
     return this.prisma.user.create({
       data: { email, name },
     });
@@ -56,7 +55,4 @@ class Memberresolver {
       where: { id },
     });
   }
-
-
-
 }

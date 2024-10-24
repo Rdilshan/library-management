@@ -1,7 +1,7 @@
 
 import { Memberdto } from './dto/member';
 import { PrismaService } from '../prisma.service';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, User,BorrowBook } from '@prisma/client';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 
@@ -99,6 +99,23 @@ export class MembersService {
       })
 
       return updateuser;
+    } catch (error) {
+      throw new HttpException(
+        error.message || 'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR, // 500 Internal Server Error
+      );
+    }
+  }
+
+
+  async History(id:number){
+    try {
+      id = Number(id)
+      return await this.prisma.borrowBook.findMany({
+        where: {
+          userId: id
+        }
+      })
     } catch (error) {
       throw new HttpException(
         error.message || 'Internal Server Error',

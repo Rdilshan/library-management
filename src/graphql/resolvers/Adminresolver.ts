@@ -3,10 +3,12 @@ import { Admin, Role } from '../model/admin';
 import { PrismaService } from '../../prisma.service';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-
+import { UseGuards } from '@nestjs/common';
+import {AuthGuard} from "../../Middleware/AuthGuard";
 
 export
 @Resolver()
+
 class Adminresolver {
   constructor(
     private readonly prisma: PrismaService,
@@ -14,11 +16,13 @@ class Adminresolver {
   ) {}
 
   @Query(() => [Admin])
+  @UseGuards(AuthGuard)
   async getAdmins() {
     return this.prisma.admin.findMany();
   }
 
   @Query(() => Admin)
+  @UseGuards(AuthGuard)
   async getAdmin(@Args('id', { type: () => Int }) id: number) {
     id = Number(id);
     return this.prisma.admin.findUnique({ where: { id } });
@@ -49,6 +53,7 @@ class Adminresolver {
   }
 
   @Mutation(() => Admin)
+  @UseGuards(AuthGuard)
   async createAdmin(
     @Args('name') name: string,
     @Args('email') email: string,
@@ -64,6 +69,7 @@ class Adminresolver {
   }
 
   @Mutation(() => Admin)
+  @UseGuards(AuthGuard)
   async UpdateAdmin(
     @Args('id', { type: () => Int }) id: number,
     @Args('name') name: string,
@@ -77,6 +83,7 @@ class Adminresolver {
   }
 
   @Mutation(() => Admin)
+  @UseGuards(AuthGuard)
   async DeleteAdmin(@Args('id', { type: () => Int }) id: number) {
     return await this.prisma.admin.delete({
       where: { id },

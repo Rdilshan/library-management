@@ -1,0 +1,22 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Admin {
+  id: Int!
+  name: String!
+  email: String!
+  username: String!
+  password: String!
+  role: Role!
+}
+
+enum Role {
+  Super
+  manager
+}
+
+type Query {
+  getAdmins: [Admin!]!
+  getAdmin(id: Int!): Admin!
+}

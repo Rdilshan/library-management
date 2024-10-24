@@ -6,6 +6,8 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { Adminresolver } from './graphql/resolvers/Adminresolver';
 import { Bookresolver } from "./graphql/resolvers/Bookresolver";
+import { Memberresolver } from './graphql/resolvers/Memberresolver';
+
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -19,6 +21,6 @@ import { Bookresolver } from "./graphql/resolvers/Bookresolver";
     }),
   ],
   controllers: [],
-  providers: [PrismaService, Adminresolver,Bookresolver],
+  providers: [PrismaService, Adminresolver,Bookresolver,Memberresolver],
 })
 export class AppModule {}

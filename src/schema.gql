@@ -20,3 +20,8 @@ type Query {
   getAdmins: [Admin!]!
   getAdmin(id: Int!): Admin!
 }
+
+type Mutation {
+  createAdmin(name: String!, email: String!, username: String!, password: String!): Admin!
+  UpdateAdmin(id: Int!, name: String!, email: String!, username: String!): Admin!
+}

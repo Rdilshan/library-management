@@ -38,4 +38,20 @@ export class BorrowBookController {
   remove(@Param('id') id: number) {
     return this.borrowBookService.remove(id);
   }
+
+  @Post("/finished/:id")
+  finished(@Param('id') id: number) {
+    return this.borrowBookService.finished(id);
+
+  }
+
+  @Post("/finished")
+  getFinished() {
+    return this.borrowBookService.getFinished();
+  }
+
+  @Post("/borrow")
+  borrowBook() {
+    return this.borrowBookService.borrowbookcount();
+  }
 }

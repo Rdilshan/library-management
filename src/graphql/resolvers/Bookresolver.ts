@@ -1,11 +1,13 @@
 import { Resolver, Query, Args, Int, Mutation } from '@nestjs/graphql';
 import { Book } from '../model/Book';
 import { PrismaService } from '../../prisma.service';
-
+import { UseGuards } from '@nestjs/common';
+import {AuthGuardManager} from "../../Middleware/AuthGuardManager";
 
 
 export
 @Resolver()
+@UseGuards(AuthGuardManager)
 class Bookresolver {
   constructor(
     private readonly prisma: PrismaService,

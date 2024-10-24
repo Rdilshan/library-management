@@ -9,8 +9,11 @@ import { MembersModule } from './members/members.module';
 import { BookdModule } from './bookd/bookd.module';
 import { BorrowBookModule } from './borrow-book/borrow-book.module';
 
+
 //middlware
 import {SuperadminLoggerMiddleware} from "./common/middlware/checkingsuperadmin.middlware";
+import { AdminLoggerMiddleware } from './common/middlware/checkingadmin.middlware';
+
 
 @Module({
   imports: [
@@ -25,6 +28,7 @@ import {SuperadminLoggerMiddleware} from "./common/middlware/checkingsuperadmin.
 })
 
 export class AppModule implements NestModule {
+
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(SuperadminLoggerMiddleware)
@@ -32,5 +36,11 @@ export class AppModule implements NestModule {
         { path: 'admin/login', method: RequestMethod.POST }
       )
       .forRoutes('admin');
+
+      consumer
+      .apply(AdminLoggerMiddleware)
+      .forRoutes('bookd','borrow-book','members');
   }
+
+
 }

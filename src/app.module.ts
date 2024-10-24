@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MembersModule } from './members/members.module';
 import { BookdModule } from './bookd/bookd.module';
+import { BorrowBookModule } from './borrow-book/borrow-book.module';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { BookdModule } from './bookd/bookd.module';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '2h' },
     }),
-    ConfigModule.forRoot(),DatabaseModule, AdminModule, MembersModule, BookdModule],
+    ConfigModule.forRoot(),DatabaseModule, AdminModule, MembersModule, BookdModule, BorrowBookModule],
   controllers: [AppController],
   providers: [AppService],
 })

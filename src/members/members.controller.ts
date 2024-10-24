@@ -33,5 +33,9 @@ export class MembersController {
     return this.membersService.remove(id);
   }
 
+  @Post('/History/:id')
+  History(@Param('id') id: number) {
+    return this.membersService.History(id);
+  }
 
 }

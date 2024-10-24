@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { Adminresolver } from './graphql/resolvers/Adminresolver';
 import { PrismaService } from './prisma.service';
 import { JwtModule } from '@nestjs/jwt';
+
+import { Adminresolver } from './graphql/resolvers/Adminresolver';
+import { Bookresolver } from "./graphql/resolvers/Bookresolver";
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -17,6 +19,6 @@ import { JwtModule } from '@nestjs/jwt';
     }),
   ],
   controllers: [],
-  providers: [PrismaService, Adminresolver],
+  providers: [PrismaService, Adminresolver,Bookresolver],
 })
 export class AppModule {}

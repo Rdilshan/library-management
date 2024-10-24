@@ -24,7 +24,7 @@ class Adminresolver {
     return this.prisma.admin.findUnique({ where: { id } });
   }
 
-  @Query()
+  @Query(()=>String)
   async LoginAdmin(@Args('email') email: string, @Args('password') password: string) {
     const checkadmin = this.prisma.admin.findFirst({
       where: { email },
@@ -45,7 +45,7 @@ class Adminresolver {
       role: (await checkadmin).role,
     });
 
-    return { token };
+    return  token ;
   }
 
   @Mutation(() => Admin)
